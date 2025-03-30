@@ -1,4 +1,6 @@
 <script>
+    import { onBeforeClose } from 'svelte-modals'
+
     const {
       // provided by <Modals />
       isOpen,
@@ -8,6 +10,12 @@
       title,
       message
     } = $props()
+
+    let canClose = $state(false)
+
+    onBeforeClose(() => {
+        return canClose
+    })
   
   </script>
   
@@ -17,7 +25,7 @@
         <h4 class="h4">{title}</h4>
         <p>{message}</p>
         <div class="actions">
-          <button class="btn preset-filled-primary-500" onclick={() => close()}>Got it</button>
+          <button class="btn preset-filled-primary-500" onclick={() => {canClose = true; close()}}>Got it</button>
         </div>
       </div>
     </div>
